@@ -10,6 +10,8 @@ let btnLPrev;
 let btnNext; 
 let employeeClicked;
 let employeesList = []; 
+//let nextEmployeeIndex;
+//let nextEmployee;
 
 //========================
 //  Fetching Data
@@ -96,7 +98,16 @@ function displayEmployeeModal(employee) {
     btnExit.addEventListener('click', (e) => {
         modalContainer.remove();
     });
-    
+    /*
+    btnNext = document.querySelector('#modal-next'); 
+    btnNext.addEventListener('click', (e) => {
+        nextEmployeeIndex = employeesList.indexOf(employeeClicked) + 1;
+        nextEmployee = employeesList[nextEmployeeIndex]; 
+        modalContainer.remove(); 
+        displayEmployeeModal(nextEmployee); 
+        console.log('hi');
+    }); 
+    */
 };
 
 //========================
