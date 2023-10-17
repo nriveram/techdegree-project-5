@@ -6,12 +6,10 @@ let searchInput;
 let searchBtn; 
 let modalContainer; 
 let btnExit;
-let btnLPrev; 
+let btnPrev; 
 let btnNext; 
 let employeeClicked;
 let employeesList = []; 
-//let nextEmployeeIndex;
-//let nextEmployee;
 
 //========================
 //  Fetching Data
@@ -62,7 +60,8 @@ function displayEmployees(employees) {
 };
 /**
  * displayEmployeeModal() receives an employee that was selected to display
- * a modal containing information about the employee. 
+ * a modal containing information about the employee. Function also includes
+ * event listeners for exit, next, and previous buttons. 
  * @param {*} employee - an employee Object containing information like email,
  *  location, picture, etc. 
  */
@@ -98,16 +97,32 @@ function displayEmployeeModal(employee) {
     btnExit.addEventListener('click', (e) => {
         modalContainer.remove();
     });
-    /*
+    
+    //========================
+    //  Next and Previous Buttons Extra Credit 
+    //------------------------
+    // event listener for 'NEXT' button 
     btnNext = document.querySelector('#modal-next'); 
     btnNext.addEventListener('click', (e) => {
-        nextEmployeeIndex = employeesList.indexOf(employeeClicked) + 1;
-        nextEmployee = employeesList[nextEmployeeIndex]; 
-        modalContainer.remove(); 
-        displayEmployeeModal(nextEmployee); 
-        console.log('hi');
+        const nextEmployeeIndex = employeesList.indexOf(employeeClicked) + 1;
+        if (nextEmployeeIndex < employeesList.length) {
+            const nextEmployee = employeesList[nextEmployeeIndex]; 
+            employeeClicked = nextEmployee; 
+            modalContainer.remove(); 
+            displayEmployeeModal(employeeClicked); 
+        } 
     }); 
-    */
+    // event listener for 'PREVIOUS' button 
+    btnPrev = document.querySelector('#modal-prev'); 
+    btnPrev.addEventListener('click', (e) => {
+        const prevEmployeeIndex = employeesList.indexOf(employeeClicked) - 1;
+        if (prevEmployeeIndex >= 0) {
+            const prevEmployee = employeesList[prevEmployeeIndex]; 
+            employeeClicked = prevEmployee; 
+            modalContainer.remove(); 
+            displayEmployeeModal(employeeClicked); 
+        } 
+    });
 };
 
 //========================
