@@ -2,7 +2,7 @@
    Public API Request
 ======================================== */
 
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Literata');
 
 * {
 	box-sizing: border-box;
@@ -14,9 +14,9 @@ html, body {
 }
 
 body {
-    font-family: "Nunito", sans-serif;
+    font-family: 'Literata', serif;
     text-align: center;
-    background: rgba(235, 235, 235, 0.9);
+    background: rgba(149,196,232, 0.9);
 }
 
 header {
@@ -32,6 +32,12 @@ header h1 {
     font-size: 1.25em;
     color: rgba(50, 50, 50, 0.9);
     margin-top: 35px;
+}
+
+header h2 {
+    font-size: 1em;
+    color: rgba(50, 50, 50, 0.9);
+    margin-top: 25px;
 }
 
 .search-input {
