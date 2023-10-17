@@ -65,6 +65,7 @@ function displayEmployees(employees) {
  *  location, picture, etc. 
  */
 function displayEmployeeModal(employee) {
+    // creates a date object to format employee's dob 
     const dob = new Date(employee.dob.date);
     const employeeHTML = `
     <div class="modal-container">
@@ -78,7 +79,7 @@ function displayEmployeeModal(employee) {
                 <hr>
                 <p class="modal-text">${employee.cell}</p>
                 <p class="modal-text">${employee.location.street.number} ${employee.location.street.name}, ${employee.location.city}, 
-                ${employee.location.country} ${employee.location.postcode}</p>
+                ${employee.location.state} ${employee.location.postcode}</p>
                 <p class="modal-text">Birthday: ${dob.getMonth()+1}/${dob.getDate()}/${dob.getFullYear()}</p>
             </div>
         </div>
@@ -87,36 +88,9 @@ function displayEmployeeModal(employee) {
             <button type="button" id="modal-next" class="modal-next btn">Next</button>
         </div>
     </div>`;
-    /*
-    employee.map( (person) => 
-    {   
-        const dob = new Date(person.dob.date); 
-        employeeHTML += `
-    <div class="modal-container">
-        <div class="modal">
-            <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
-            <div class="modal-info-container">
-                <img class="modal-img" src="${person.picture.large}" alt="profile picture">
-                <h3 id="name" class="modal-name cap">${person.name.first} ${person.name.last}</h3>
-                <p class="modal-text">${person.email}</p>
-                <p class="modal-text cap">${person.location.city}</p>
-                <hr>
-                <p class="modal-text">${person.cell}</p>
-                <p class="modal-text">${person.location.street.number} ${person.location.street.name}, ${person.location.city}, 
-                ${person.location.country} ${person.location.postcode}</p>
-                <p class="modal-text">Birthday: ${dob.getMonth()+1}/${dob.getDate()}/${dob.getFullYear()}</p>
-            </div>
-        </div>
-        <div class="modal-btn-container">
-            <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
-            <button type="button" id="modal-next" class="modal-next btn">Next</button>
-        </div>
-    </div>
     
-    `}).join('');
-    */
     bodyContainer.insertAdjacentHTML("beforeend", employeeHTML); 
-
+    // creates an exit button event listerner to remove modal 
     btnExit = document.querySelector('#modal-close-btn'); 
     modalContainer = document.querySelector('.modal-container'); 
     btnExit.addEventListener('click', (e) => {
@@ -128,10 +102,16 @@ function displayEmployeeModal(employee) {
 //========================
 //  Modal Event Listeners 
 //------------------------
+/**
+ * Creates a gallery event listener to create a gallery modal for the 
+ * employee 'clicked'. 
+ */
 galleryContainer.addEventListener('click', (e) => {
     const employeeCard = e.target.closest('.card');
+    // makes sure the click wasn't an empty space 
     if (employeeCard !== null) {
         const employeeName = employeeCard.querySelector('#name').textContent;
+        // finds the employee clicked object 
         employeeClicked = employeesList.filter(employee => {
             let currEmployee = employee.name.first + ' ' + employee.name.last;
             if (employeeName === currEmployee) {
@@ -147,36 +127,52 @@ galleryContainer.addEventListener('click', (e) => {
 //========================
 //  Search Bar Extra Credit
 //------------------------
-
+/**
+ * addSearchBar() adds the search bar to the web page and adds event listeners
+ * to search for name of employee using the search icon or/and key. 
+ */
 function addSearchBar() {
+    // displays the search bar 
     displayBar(); 
     searchInput = document.querySelector('.search-input'); 
     searchBtn = document.querySelector('.search-submit'); 
+    // when user presses on a key it will search 
     searchInput.addEventListener('keyup', () => {
         searchEmployee(searchInput);
      });
+     // when user presses on click icon it will search 
     searchBtn.addEventListener('click', () => {
         searchEmployee(searchInput);
      });
 };
-
+/**
+ * searchEmployee() is a helper function for addSearchBar() that 
+ * checks if the employee in the directory 
+ * @param {*} element - is given the search element
+ */
 function searchEmployee(element) {
+    // stores potential matches 
     const nameMatches = []; 
     const name = element.value.toLowerCase(); 
     employeesList.forEach(person => {
         let currPerson = person.name.first + ' ' + person.name.last;
         currPerson = currPerson.toLowerCase(); 
+        // checks if the typed name matches an employee
         if (currPerson.includes(name)) {
             nameMatches.push(person);
         }
     }); 
+    // shows employee(s) or displays message 
     if (nameMatches.length > 0) {
         displayEmployees(nameMatches);
     } else {
         galleryContainer.innerHTML = '<h3>No results found.</h3>'; 
     }
 };
-
+/**
+ * displayBar() is a helper function for addSearchBar(). It helps display 
+ * the bar by adding the DOM elements to the header. 
+ */
 function displayBar() {
     const searchHTML = `<form action="#" method="get">
         <input type="search" id="search-input" class="search-input" placeholder="Search...">
